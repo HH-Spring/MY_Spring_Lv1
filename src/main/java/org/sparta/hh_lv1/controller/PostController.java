@@ -3,10 +3,9 @@ package org.sparta.hh_lv1.controller;
 import org.sparta.hh_lv1.dto.PostRequestDto;
 import org.sparta.hh_lv1.dto.PostResponseDto;
 import org.sparta.hh_lv1.service.PostService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -20,5 +19,10 @@ public class PostController {
     @PostMapping("/post")
     public PostResponseDto createPost(@RequestBody PostRequestDto postRequestDto) {
         return this.postService.createPost(postRequestDto);
+    }
+
+    @GetMapping("/post")
+    public List<PostResponseDto> getAllPost() {
+        return this.postService.getAllPost();
     }
 }
