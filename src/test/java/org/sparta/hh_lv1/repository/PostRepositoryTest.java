@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.sparta.hh_lv1.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -33,5 +36,13 @@ class PostRepositoryTest {
         // then
         assertThat(postRepository.count()).isEqualTo(preCount + 1);
 
+    }
+
+    @Test
+    @DisplayName("전체 select 테스트")
+    void allSelectTest() {
+        List<Post> post = postRepository.findAll();
+
+        assertThat(post).isNotNull().hasSize(2);
     }
 }
