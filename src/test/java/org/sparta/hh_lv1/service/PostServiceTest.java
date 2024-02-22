@@ -4,8 +4,13 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.sparta.hh_lv1.dto.PostRequestDto;
+import org.sparta.hh_lv1.dto.PostResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
@@ -24,5 +29,13 @@ class PostServiceTest {
         post.setContents("글 내용");
 
         postService.createPost(post);
+    }
+
+    @Test
+    @DisplayName("2-1 게시글 전체 조회 테스트")
+    void getAllPostSuccess() {
+        List<PostResponseDto> post = postService.getAllPost();
+
+        assertThat(post).isNotNull().hasSize(2);
     }
 }
