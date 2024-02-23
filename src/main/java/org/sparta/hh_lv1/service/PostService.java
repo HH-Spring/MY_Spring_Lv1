@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 public class PostService {
@@ -39,14 +40,30 @@ public class PostService {
 //            return new PostResponseDto(post);
 //        }
 //        return null;
-        return this.postRepository.findById(postId)
-                .map(PostResponseDto::new)
-                .orElseThrow(() -> new NoSuchElementException("Post not found"));
+        return findPost(postId);
     }
+
+    public PostResponseDto updatePost(Long postId, PostRequestDto postRequestDto) {
+        Post post = this.findNormalPost(postId);
+
+        if(!Objects.equals(post.getPassword(), postRequestDto.getPassword())) {
+            throw new IllegalArgumentException("비밀번호 불일치");
+        }
+
+        post.update(postRequestDto);
+
+        return new PostResponseDto(post);
+    }
+
 
     public PostResponseDto findPost(Long postId) {
         return this.postRepository.findById(postId)
                 .map(PostResponseDto::new)
+                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+    }
+
+    public Post findNormalPost(Long postId) {
+        return this.postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found"));
     }
 }

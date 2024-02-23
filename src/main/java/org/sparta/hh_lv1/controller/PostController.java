@@ -32,4 +32,8 @@ public class PostController {
         return this.postService.getPost(postId);
     }
 
+    @PatchMapping("/post/{postId}")
+    public PostResponseDto updatePost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto) {
+        return this.postService.updatePost(postId, postRequestDto);
+    }
 }

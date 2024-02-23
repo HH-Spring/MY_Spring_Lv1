@@ -34,4 +34,10 @@ public class Post extends Time {
         this.password = postRequestDto.getPassword();
         this.contents = postRequestDto.getContents();
     }
+
+    public void update(PostRequestDto postRequestDto) {
+        this.title = postRequestDto.getTitle();
+        this.author = postRequestDto.getAuthor();
+        this.contents = postRequestDto.getContents();
+    }
 }
