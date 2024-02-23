@@ -1,5 +1,6 @@
 package org.sparta.hh_lv1.controller;
 
+import org.sparta.hh_lv1.dto.PostDeleteRequestDto;
 import org.sparta.hh_lv1.dto.PostRequestDto;
 import org.sparta.hh_lv1.dto.PostResponseDto;
 import org.sparta.hh_lv1.service.PostService;
@@ -35,5 +36,10 @@ public class PostController {
     @PatchMapping("/post/{postId}")
     public PostResponseDto updatePost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto) {
         return this.postService.updatePost(postId, postRequestDto);
+    }
+
+    @DeleteMapping("/post/{postId}")
+    public String deletePost(@PathVariable Long postId, @RequestBody PostDeleteRequestDto postDeleteRequestDto) {
+        return this.postService.deletePost(postId, postDeleteRequestDto);
     }
 }
