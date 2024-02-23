@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -32,13 +33,16 @@ public class PostService {
     }
 
     public PostResponseDto getPost(Long postId) {
-        Optional<Post> postOptional = this.postRepository.findById(postId);
-
-        if(postOptional.isPresent()) {
-            Post post = postOptional.get();
-
-            return new PostResponseDto(post);
-        }
-        return null;
+//        Optional<Post> postOptional = this.postRepository.findById(postId);
+//
+//        if(postOptional.isPresent()) {
+//            Post post = postOptional.get();
+//
+//            return new PostResponseDto(post);
+//        }
+//        return null;
+        return this.postRepository.findById(postId)
+                .map(PostResponseDto::new)
+                .orElseThrow(() -> new NoSuchElementException("Post not found"));
     }
 }

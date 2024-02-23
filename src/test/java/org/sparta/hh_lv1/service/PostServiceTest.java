@@ -5,10 +5,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.sparta.hh_lv1.dto.PostRequestDto;
 import org.sparta.hh_lv1.dto.PostResponseDto;
+import org.sparta.hh_lv1.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,4 +40,16 @@ class PostServiceTest {
 
         assertThat(post).isNotNull().hasSize(2);
     }
+
+    @Test
+    @DisplayName("3-1 게시글 상세 조회 테스트")
+    void getDetailPostSuccess() {
+        PostResponseDto post = postService.getPost(13L);
+
+        assertThat(post).isNotNull();
+        assertThat(post.getTitle()).isNotNull().isNotEmpty();
+        assertThat(post.getAuthor()).isNotNull().isNotEmpty();
+        assertThat(post.getContents()).isNotNull().isNotEmpty();
+    }
+
 }
