@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,5 +45,22 @@ class PostRepositoryTest {
         List<Post> post = postRepository.findAll();
 
         assertThat(post).isNotNull().hasSize(2);
+    }
+
+    @Test
+    @DisplayName("단일 select 테스트")
+    void detailSelectTest() {
+        Optional<Post> postOptional = postRepository.findById(4L);
+
+        if(postOptional.isPresent()) {
+            // 값이 존재 하는지 확인
+            assertThat(postOptional).isPresent();
+
+            // null 이 아닌지 확인
+            assertThat(postOptional.get()).isNotNull();
+        } else {
+            // 값이 존재하지 않음을 확인
+            assertThat(postOptional).isEmpty();
+        }
     }
 }
