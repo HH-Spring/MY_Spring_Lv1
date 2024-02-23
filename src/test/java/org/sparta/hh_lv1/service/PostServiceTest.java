@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.sparta.hh_lv1.dto.PostRequestDto;
 import org.sparta.hh_lv1.dto.PostResponseDto;
+import org.sparta.hh_lv1.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -58,4 +59,31 @@ class PostServiceTest {
             postService.getPost(999L);
         });
     }
+
+    @Test
+    @DisplayName("4-1 게시글 업데이트 테스트")
+    void updatePostSuccess() {
+        PostRequestDto post = new PostRequestDto();
+        post.setTitle("초기 제목");
+        post.setAuthor("초기 이름");
+        post.setPassword("초기 비밀번호");
+        post.setContents("초기 글");
+        PostResponseDto createdPost = postService.createPost(post);
+
+
+        PostRequestDto updateTarget = new PostRequestDto();
+        updateTarget.setTitle("변경된 제목");
+        updateTarget.setAuthor("변경된 이름");
+        updateTarget.setPassword("초기 비밀번호");
+        updateTarget.setContents("변경된 글");
+
+        PostResponseDto updatedPost = postService.updatePost(createdPost.getPostId(), updateTarget);
+
+        assertThat(updatedPost).isNotNull();
+        assertThat(updatedPost.getTitle()).isEqualTo(updateTarget.getTitle());
+        assertThat(updatedPost.getAuthor()).isEqualTo(updateTarget.getAuthor());
+        assertThat(updatedPost.getContents()).isEqualTo(updateTarget.getContents());
+
+    }
+
 }
