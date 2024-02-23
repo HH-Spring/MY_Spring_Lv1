@@ -63,4 +63,32 @@ class PostRepositoryTest {
             assertThat(postOptional).isEmpty();
         }
     }
+
+    @Test
+    @DisplayName("Post 업데이트 테스트")
+    void updatePostTest() {
+        Post post = new Post();
+
+        String updatedTitle = "바뀐 제목";
+        String updatedContents = "바뀐 내용";
+
+        post.setPostId(13L);
+        post.setTitle("원본 제목");
+        post.setAuthor("원본 이름");
+        post.setPassword("원본 비밀번호");
+        post.setContents("원본 내용");
+
+        postRepository.save(post);
+
+        Long postId = post.getPostId();
+
+        Post updateTarget = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        updateTarget.setTitle(updatedTitle);
+        updateTarget.setContents(updatedContents);
+        postRepository.save(updateTarget);
+
+        Post updatedPost = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        assertThat(updatedPost.getTitle()).isEqualTo(updatedTitle);
+        assertThat(updatedPost.getContents()).isEqualTo(updatedContents);
+    }
 }
