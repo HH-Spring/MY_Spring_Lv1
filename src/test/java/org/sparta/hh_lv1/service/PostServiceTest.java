@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -52,4 +54,11 @@ class PostServiceTest {
         assertThat(post.getContents()).isNotNull().isNotEmpty();
     }
 
+    @Test
+    @DisplayName("3-2 게시글 상세 조회 실패 테스트")
+    void getDetailPostFailed() {
+        assertThrows(NoSuchElementException.class, () -> {
+            postService.getPost(999L);
+        });
+    }
 }
