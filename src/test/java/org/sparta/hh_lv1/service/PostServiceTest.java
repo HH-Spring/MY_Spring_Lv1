@@ -3,6 +3,7 @@ package org.sparta.hh_lv1.service;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.sparta.hh_lv1.dto.PostDeleteRequestDto;
 import org.sparta.hh_lv1.dto.PostRequestDto;
 import org.sparta.hh_lv1.dto.PostResponseDto;
 import org.sparta.hh_lv1.entity.Post;
@@ -86,4 +87,24 @@ class PostServiceTest {
 
     }
 
+    @Test
+    @DisplayName("5-1 게시글 삭제 테스트")
+    void deletePostSuccess() {
+        PostRequestDto post = new PostRequestDto();
+        post.setTitle("제목");
+        post.setAuthor("이름");
+        post.setPassword("비밀번호");
+        post.setContents("글");
+        PostResponseDto createdPost = postService.createPost(post);
+
+        PostDeleteRequestDto deletedPost = new PostDeleteRequestDto();
+        deletedPost.setAuthor("이름");
+        deletedPost.setPassword("비밀번호");
+
+        postService.deletePost(createdPost.getPostId(), deletedPost);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            postService.getPost(createdPost.getPostId());
+        });
+    }
 }

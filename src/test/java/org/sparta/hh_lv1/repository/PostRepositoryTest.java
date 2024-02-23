@@ -91,4 +91,22 @@ class PostRepositoryTest {
         assertThat(updatedPost.getTitle()).isEqualTo(updatedTitle);
         assertThat(updatedPost.getContents()).isEqualTo(updatedContents);
     }
+
+    @Test
+    @DisplayName("Post 삭제 테스트")
+    void deletePostTest() {
+        Post post = new Post();
+        post.setPostId(15L);
+        post.setTitle("제목");
+        post.setAuthor("이름");
+        post.setPassword("비밀번호");
+        post.setContents("내용");
+
+        Post savedPost = postRepository.save(post);
+
+        postRepository.delete(savedPost);
+
+        Optional<Post> deletedPost = postRepository.findById(savedPost.getPostId());
+        assertThat(deletedPost).isEmpty();
+    }
 }

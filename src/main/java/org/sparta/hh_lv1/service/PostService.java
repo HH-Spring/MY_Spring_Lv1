@@ -1,5 +1,6 @@
 package org.sparta.hh_lv1.service;
 
+import org.sparta.hh_lv1.dto.PostDeleteRequestDto;
 import org.sparta.hh_lv1.dto.PostRequestDto;
 import org.sparta.hh_lv1.dto.PostResponseDto;
 import org.sparta.hh_lv1.entity.Post;
@@ -54,6 +55,18 @@ public class PostService {
         postRepository.save(post);
 
         return new PostResponseDto(post);
+    }
+
+    public String deletePost(Long postId, PostDeleteRequestDto postDeleteRequestDto) {
+        Post post = this.findNormalPost(postId);
+
+        if(!Objects.equals(post.getPassword(), postDeleteRequestDto.getPassword())) {
+            throw new IllegalArgumentException("비밀번호 불일치");
+        }
+
+        postRepository.delete(post);
+
+        return "done";
     }
 
 
