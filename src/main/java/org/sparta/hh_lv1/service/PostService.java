@@ -6,7 +6,9 @@ import org.sparta.hh_lv1.entity.Post;
 import org.sparta.hh_lv1.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -27,5 +29,16 @@ public class PostService {
 
     public List<PostResponseDto> getAllPost() {
         return this.postRepository.findAllByOrderByCreatedAtDesc().stream().map(PostResponseDto::new).toList();
+    }
+
+    public PostResponseDto getPost(Long postId) {
+        Optional<Post> postOptional = this.postRepository.findById(postId);
+
+        if(postOptional.isPresent()) {
+            Post post = postOptional.get();
+
+            return new PostResponseDto(post);
+        }
+        return null;
     }
 }

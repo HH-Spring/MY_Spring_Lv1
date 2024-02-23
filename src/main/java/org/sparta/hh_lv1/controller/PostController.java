@@ -23,6 +23,12 @@ public class PostController {
 
     @GetMapping("/post")
     public List<PostResponseDto> getAllPost() {
+        System.out.println("test");
         return this.postService.getAllPost();
+    }
+
+    @GetMapping("/post/{postId}")
+    public PostResponseDto getPost(@PathVariable Long postId) {
+        return this.postService.getPost(postId);
     }
 }
