@@ -31,4 +31,5 @@ public class PostController {
     public PostResponseDto getPost(@PathVariable Long postId) {
         return this.postService.getPost(postId);
     }
+
 }

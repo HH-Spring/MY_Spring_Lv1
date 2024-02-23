@@ -6,10 +6,8 @@ import org.sparta.hh_lv1.entity.Post;
 import org.sparta.hh_lv1.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class PostService {
@@ -44,5 +42,11 @@ public class PostService {
         return this.postRepository.findById(postId)
                 .map(PostResponseDto::new)
                 .orElseThrow(() -> new NoSuchElementException("Post not found"));
+    }
+
+    public PostResponseDto findPost(Long postId) {
+        return this.postRepository.findById(postId)
+                .map(PostResponseDto::new)
+                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
     }
 }
